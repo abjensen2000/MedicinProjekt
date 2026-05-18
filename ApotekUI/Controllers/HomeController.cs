@@ -25,7 +25,7 @@ namespace ApotekUI.Controllers
                     return View("Forside", apotekDTO);
                 }
             }
-            return View("Index", apotekID);
+            return View("Index");
         }
         [HttpGet]
         public IActionResult Forside()
@@ -83,7 +83,7 @@ namespace ApotekUI.Controllers
                 return RedirectToAction("GenindlæsReceptListe", new { cprnummer = cpr });
             }
 
-            return Content($"Der opstod en fejl ved udlevering af ordinationen. API Status: {response.StatusCode}");
+            return Content($"Der opstod en fejl ved udlevering af ordinationen.");
         }
     }
 }

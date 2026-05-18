@@ -16,4 +16,7 @@
   <Folder Name="/Klienter/">
     <Project Path="ApotekUI/ApotekUI.csproj" />
   </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="Spørgsmål.txt" />
+  </Folder>
 </Solution>

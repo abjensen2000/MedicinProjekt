@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Loginside";
+}
+@model int?
+<div class="text-center">
+    <h1 class="display-4">Velkommen til receptportalen. Log ind.</h1>
+
+    <form method="post">
+        <input name="ApotekID" type="text" placeholder="ApoteksID" />
+        <input type="submit" value="Log ind" />
+    </form>
+
+    @if (Model != null)
+    {
+        <p>Du skrev: @Model</p>
+    }
+</div>

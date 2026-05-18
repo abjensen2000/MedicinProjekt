@@ -1,0 +1,22 @@
+﻿@using DTO
+@model ApotekDTO
+@{
+    ViewData["Title"] = "Forside";
+}
+
+<h1>Velkommen til receptportalen</h1>
+
+@if (Model != null)
+{
+    <p>Logget ind som: @Model.Navn</p>
+}
+
+<p>Indtast CPR-nummer på patient</p>
+<form method="post" asp-action="Forside" asp-controller="Home">
+    @if (Model != null)
+    {
+        <input type="hidden" name="apotekID" value="@Model.Id" />
+    }
+    <input name="cprnummer" id="cprnummer" type="text" placeholder="PatientCPR" />
+    <input type="submit" value="Søg" />
+</form>

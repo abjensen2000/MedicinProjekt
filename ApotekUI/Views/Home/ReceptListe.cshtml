@@ -1,0 +1,35 @@
+﻿@using ApotekUI.Models
+@using DTO
+@model List<ReceptMedOrdinationer>
+@{
+    ViewData["Title"] = "ReceptListe";
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    foreach (ReceptMedOrdinationer recept in Model)
+    {
+        <div>
+            <h3>@recept.Recept.Id</h3>
+        </div>
+        
+        foreach (OrdinationDTO ordinationDTO in recept.Ordinationer)
+        {
+            int udleveringerTilbage = ordinationDTO.AntalUdleveringer - ordinationDTO.AntalForetagneUdleveringer;
+            <p>Lægemiddel: @ordinationDTO.Lægemiddel</p>
+            <p>Dosis: @ordinationDTO.Dosis</p>
+            <p>Antal udleveringertilbage = @udleveringerTilbage</p>
+            <form method="post" asp-action="UdleverOrdination" asp-controller="Home">
+                <input type="hidden" name="ordinationId" value="@ordinationDTO.Id" />
+                <input type="hidden" name="cpr" value="@recept.Recept.Cpr" />
+                <!-- Du kan evt. sende cprnummer med, hvis du vil vise den samme patients liste bagefter -->
+                <input type="submit" value="Udlever" class="btn btn-primary" />
+            </form>
+            <p>________________________________________________________________</p>
+        }
+    }
+}
+else
+{
+    <p>Ingen recepter fundet.</p>
+}

@@ -1,0 +1,6 @@
+@MedicinAPI_HostAddress = http://localhost:5062
+
+GET {{MedicinAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

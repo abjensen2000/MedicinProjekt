@@ -1,6 +1,6 @@
 ﻿namespace Models
 {
-    public class Apotek
+    internal class Apotek
     {
         private int _id;
         private string _navn;

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Models
 {
-    public class Lægehus
+    internal class Lægehus
     {
         private int _id;
         private string _ydernummer;

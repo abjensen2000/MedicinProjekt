@@ -5,18 +5,19 @@
   <Folder Name="/Business/">
     <Project Path="BusinessLayer/BusinessLayer.csproj" />
   </Folder>
-  <Folder Name="/Business/DTO&amp;Mapper/">
-    <Project Path="DTO/DTO.csproj" />
-    <Project Path="Mappers/Mappers.csproj" />
-  </Folder>
   <Folder Name="/DataLayer/">
     <Project Path="ConsoleApp1/DataAccess.csproj" />
+    <Project Path="Mappers/Mappers.csproj" />
     <Project Path="Models/Models.csproj" Id="587eacf4-35bd-4545-8a1e-044430316011" />
+  </Folder>
+  <Folder Name="/DataLayer/Repositories/">
+    <File Path="ApotekRepository.cs" />
   </Folder>
   <Folder Name="/Klienter/">
     <Project Path="ApotekUI/ApotekUI.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path="Spørgsmål.txt" />
+    <Project Path="DTO/DTO.csproj" />
   </Folder>
 </Solution>

@@ -6,4 +6,8 @@ Er det fint med én controller på API?
 Er det fint jeg har model: ReceptMedOrdinationer, eftersom ordinationer ikke kender recept?
 Er GenindlæsReceptListe fint, eller kan det laves bedre?
 Lige nu returner jeg views i eller post, istedet for redirectaction, fordi det gav problemer med noget jeg
-- ikke kan huske. Skal det laves om? Kan jeg evt. bruge Session?
+- ikke kan huske. Skal det laves om?
+
+Lav repos og internal datamodel. Mappers til datalaget
+shell flyout
+Find ud af hvorfor jeg returnere views istedet for rediret.

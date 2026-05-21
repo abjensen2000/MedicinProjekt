@@ -24,8 +24,8 @@ namespace DataAccess
             //optionsBuilder.UseSqlServer("Data Source=LocalHost\\SQLEXPRESS;Initial Catalog=Medicin;Integrated Security=True;Trust Server Certificate=True");
         }
 
-        internal DbSet<Apotek> Apoteker { get; set; }
-        internal DbSet<Lægehus> Lægehuse { get; set; }
+        public DbSet<Apotek> Apoteker { get; set; }
+        public DbSet<Lægehus> Lægehuse { get; set; }
         public DbSet<Ordination> Ordinationer {  get; set; }
         public DbSet<Patient> Patienter { get; set; }
         public DbSet<Recept> Recepter {  get; set; }

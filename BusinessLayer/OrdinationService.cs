@@ -11,38 +11,25 @@ namespace BusinessLayer
 {
     public class OrdinationService
     {
-        private MedicinContext _context;
+        private UnitOfWork _unitOfWork;
 
-        public OrdinationService(MedicinContext context)
+        public OrdinationService(UnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
-        public List<OrdinationDTO> GetOrdinationDTOerTilRecept(int receptId)
+        public List<OrdinationDTO> GetOrdinationerTilRecept(int receptId)
         {
-            var recept = _context.Recepter.FirstOrDefault(r => r.Id == receptId && !r.Lukket);
-
-            if (recept == null || recept.OrdinationerId == null || !recept.OrdinationerId.Any())
-            {
-                return new List<OrdinationDTO>();
-            }
-            var ordinationer = _context.Ordinationer.Where(o => recept.OrdinationerId.Contains(o.Id)).ToList();
-            return OrdinationMapper.Map(ordinationer);
+            return _unitOfWork.Ordinationer.GetByReceptId(receptId);
         }
 
         public void UdleverOrdination(int ordinationId)
         {
-            Ordination? ordination = _context.Ordinationer.FirstOrDefault((i) => i.Id == ordinationId);
-            if (ordination != null)
-            {
-                if (ordination.AntalUdleveringer - ordination.AntalForetagneUdleveringer > 0)
-                {
-                    ordination.AntalForetagneUdleveringer++;
-                    _context.SaveChanges();
-                }
-                else {
-                    throw new ArgumentException("Ikke flere udleveringer på ordination");
-                }
-            }
+            _unitOfWork.Ordinationer.UdleverOrdination(ordinationId);
+        }
+
+        public int OpretOrdination(OrdinationDTO ordinationDTO)
+        {
+            return _unitOfWork.Ordinationer.OpretOrdination(ordinationDTO);
         }
     }
 }

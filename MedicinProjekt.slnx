@@ -10,13 +10,11 @@
     <Project Path="Mappers/Mappers.csproj" />
     <Project Path="Models/Models.csproj" Id="587eacf4-35bd-4545-8a1e-044430316011" />
   </Folder>
-  <Folder Name="/DataLayer/Repositories/">
-    <File Path="ApotekRepository.cs" />
-  </Folder>
   <Folder Name="/Klienter/">
     <Project Path="ApotekUI/ApotekUI.csproj" />
+    <Project Path="LægehusUI/LægehusUI.csproj" Id="07561a32-66f1-498c-b93b-7f772f04271a" />
   </Folder>
-  <Folder Name="/Solution Items/">
+  <Folder Name="/Shared/">
     <File Path="Spørgsmål.txt" />
     <Project Path="DTO/DTO.csproj" />
   </Folder>

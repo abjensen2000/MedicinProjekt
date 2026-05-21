@@ -20,3 +20,12 @@
     <input name="cprnummer" id="cprnummer" type="text" placeholder="PatientCPR" />
     <input type="submit" value="Søg" />
 </form>
+
+@if (ViewBag.Error != null)
+{
+    <p>@ViewBag.Error</p>
+}
+@if (ViewBag.Message != null)
+{
+    <p>@ViewBag.Message</p>
+}

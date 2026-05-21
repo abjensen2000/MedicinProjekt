@@ -6,28 +6,26 @@ namespace BusinessLayer
 {
     public class ApotekService
     {
-        private MedicinContext _context;
+        private UnitOfWork _unitOfWork;
 
-        public ApotekService(MedicinContext context)
+        public ApotekService(UnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
         public ApotekDTO CreateApotek(string navn)
         {
             ApotekDTO apotekDTO = new ApotekDTO(navn);
-            _context.Apoteker.Add(ApotekMapper.Map(apotekDTO));
-            _context.SaveChanges();
-            return apotekDTO;
+            return _unitOfWork.Apoteker.OpretApotek(apotekDTO);
         }
 
         public ApotekDTO? GetApotekDTO(int id)
         {
-            return ApotekMapper.Map(_context.Apoteker.Find(id));
+            return _unitOfWork.Apoteker.GetApotekById(id);
         }
 
         public List<ApotekDTO> GetAllApoteker()
         {
-            return ApotekMapper.Map(_context.Apoteker.ToList());
+            return _unitOfWork.Apoteker.GetApoteker();
         }
     }
 }

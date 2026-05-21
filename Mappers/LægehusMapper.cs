@@ -15,10 +15,7 @@ namespace Mappers
 
             var dto = new LægehusDTO(lægehus.Ydernummer, lægehus.Navn);
             dto.Id = lægehus.Id;
-            if (lægehus.PatientCPR != null)
-            {
-                dto.PatientCPR = lægehus.PatientCPR.ToList();
-            }
+
             return dto;
         }
 
@@ -31,10 +28,7 @@ namespace Mappers
 
             var lægehus = new Lægehus(lægehusDTO.Ydernummer, lægehusDTO.Navn);
             lægehus.Id = lægehusDTO.Id;
-            if (lægehusDTO.PatientCPR != null)
-            {
-                lægehus.PatientCPR = lægehusDTO.PatientCPR.ToList();
-            }
+
             return lægehus;
         }
 

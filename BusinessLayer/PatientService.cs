@@ -9,28 +9,26 @@ namespace BusinessLayer
 {
     public class PatientService
     {
-        private MedicinContext? _context;
+        private UnitOfWork _unitOfWork;
 
-        public PatientService(MedicinContext context)
+        public PatientService(UnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
-        public PatientDTO CreatePatientDTO(string cpr, string navn)
+        public PatientDTO CreatePatient(string cpr, string navn)
         {
             PatientDTO patientDTO = new PatientDTO(cpr, navn);
-            _context.Patienter.Add(PatientMapper.Map(patientDTO));
-            _context.SaveChanges();
-            return patientDTO;
+            return _unitOfWork.Patienter.CreatePatient(patientDTO);
         }
 
-        public PatientDTO? GetApotekDTO(int id)
+        public PatientDTO? GetApotek(int id)
         {
-            return PatientMapper.Map(_context.Patienter.Find(id));
+            return _unitOfWork.Patienter.GetPatientById(id);
         }
 
-        public List<PatientDTO> GetAllPatientDTOer()
+        public List<PatientDTO> GetAllPatienter()
         {
-            return PatientMapper.Map(_context.Patienter.ToList());
+            return _unitOfWork.Patienter.GetPatienter();
         }
     }
 }

@@ -9,36 +9,36 @@ namespace BusinessLayer
 {
     public class ReceptService
     {
-        private MedicinContext _context;
+        private UnitOfWork _unitOfWork;
 
-        public ReceptService(MedicinContext context)
+        public ReceptService(UnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public List<ReceptDTO> GetRecepterByPatient(string cpr)
         {
-            return ReceptMapper.Map(_context.Recepter.Where(i => i.Cpr == cpr && !i.Lukket).ToList());
+            return _unitOfWork.Recepter.GetReceptByPatientCpr(cpr);
         }
 
         public ReceptDTO? GetReceptByOrdination(int ordinationId)
         {
-            return ReceptMapper.Map(_context.Recepter.FirstOrDefault(i => i.OrdinationerId.Contains(ordinationId) && !i.Lukket));
+            return _unitOfWork.Recepter.GetReceptByOrdinationId(ordinationId);
         }
 
         public void CheckOmReceptErTomt(int receptId)
         {
-            var recept = _context.Recepter.FirstOrDefault(r => r.Id == receptId);
-            if (recept != null)
-            {
-                var ordinationer = _context.Ordinationer.Where(o => recept.OrdinationerId.Contains(o.Id)).ToList();
-    
-                if (ordinationer.Any() && ordinationer.All(o => o.AntalUdleveringer == o.AntalForetagneUdleveringer))
-                {
-                    recept.Lukket = true;
-                    _context.SaveChanges();
-                }
-            }
+            _unitOfWork.Recepter.CheckOmReceptErTomtOgLuk(receptId);
+        }
+
+        public void AddOrdination(int receptId, int ordinationId)
+        {
+            _unitOfWork.Recepter.AddOrdination(receptId, ordinationId);
+        }
+
+        public void OpretRecept(ReceptDTO receptDTO)
+        {
+            _unitOfWork.Recepter.OpretRecept(receptDTO);
         }
     }
 }

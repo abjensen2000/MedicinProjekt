@@ -17,14 +17,29 @@ namespace ApotekUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(int apotekID)
         {
-            List<ApotekDTO>? apotekDTOer = await _client.GetFromJsonAsync<List<ApotekDTO>>("http://localhost:5062/api/medicin/apoteker");
-            foreach (ApotekDTO apotekDTO in apotekDTOer)
+            try
             {
-                if (apotekDTO.Id == apotekID)
+                List<ApotekDTO>? apotekDTOer = await _client.GetFromJsonAsync<List<ApotekDTO>>("http://localhost:5062/api/apotek/apoteker");
+                if (apotekDTOer != null)
                 {
-                    return View("Forside", apotekDTO);
+                    var valgtApotek = apotekDTOer.FirstOrDefault(a => a.Id == apotekID);
+                    if (valgtApotek != null)
+                    {
+                        return View("Forside", valgtApotek);
+                    }
                 }
+
+                ViewBag.Error = "Forkert ID indtastet eller apotek blev ikke fundet.";
             }
+            catch (HttpRequestException)
+            {
+                ViewBag.Error = "Kunne ikke oprette forbindelse til serveren. Tjek om API'et kører.";
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Der opstod en uventet fejl.";
+            }
+
             return View("Index");
         }
         [HttpGet]
@@ -35,25 +50,48 @@ namespace ApotekUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Forside(string cprnummer, int apotekID)
         {
-
-            List<ReceptDTO>? patientsRecepter = await _client.GetFromJsonAsync<List<ReceptDTO>>($"http://localhost:5062/api/medicin/recepter/patient/{cprnummer}");
             List<ReceptMedOrdinationer> recepterMedOrdinationer = new List<ReceptMedOrdinationer>();
 
-            if (patientsRecepter != null)
+            if (string.IsNullOrWhiteSpace(cprnummer) || cprnummer.Length != 10 || !cprnummer.All(char.IsDigit))
             {
-                foreach (ReceptDTO recept in patientsRecepter)
+                ViewBag.Error = "Du skal indtaste et CPR-nummer.";
+                return View("Forside");
+            }
+
+            try
+            {
+                List<ReceptDTO>? patientsRecepter = await _client.GetFromJsonAsync<List<ReceptDTO>>($"http://localhost:5062/api/apotek/recepter/patient/{cprnummer}");
+
+                if (patientsRecepter != null && patientsRecepter.Any())
                 {
-                    var ordinationer = await _client.GetFromJsonAsync<List<OrdinationDTO>>($"http://localhost:5062/api/medicin/ordinationer/recept/{recept.Id}");
-                    ReceptMedOrdinationer receptMedOrdinationer = new ReceptMedOrdinationer(recept);
-                    if (ordinationer != null)
+                    foreach (ReceptDTO recept in patientsRecepter)
                     {
-                        foreach (OrdinationDTO ordination in ordinationer)
+                        var ordinationer = await _client.GetFromJsonAsync<List<OrdinationDTO>>($"http://localhost:5062/api/apotek/ordinationer/recept/{recept.Id}");
+                        ReceptMedOrdinationer receptMedOrdinationer = new ReceptMedOrdinationer(recept);
+                        if (ordinationer != null)
                         {
-                            receptMedOrdinationer.Ordinationer.Add(ordination);
+                            foreach (OrdinationDTO ordination in ordinationer)
+                            {
+                                receptMedOrdinationer.Ordinationer.Add(ordination);
+                            }
                         }
+                        recepterMedOrdinationer.Add(receptMedOrdinationer);
                     }
-                    recepterMedOrdinationer.Add(receptMedOrdinationer);
                 }
+                else
+                {
+                    ViewBag.Message = "Ingen recepter fundet på dette CPR-nummer.";
+                }
+            }
+            catch (HttpRequestException)
+            {
+                ViewBag.Error = "Kunne ikke hente data fra serveren. Tjek om API'et kører.";
+                return View("Forside");
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Der opstod en uventet fejl under fremsøgningen.";
+                return View("Forside");
             }
 
             return View("ReceptListe", recepterMedOrdinationer);
@@ -76,11 +114,18 @@ namespace ApotekUI.Controllers
         [HttpPost]
         public async Task<IActionResult> UdleverOrdination(int ordinationId, string cpr)
         {
-            var response = await _client.PostAsync($"http://localhost:5062/api/medicin/ordinationer/{ordinationId}", null);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return RedirectToAction("GenindlæsReceptListe", new { cprnummer = cpr });
+                var response = await _client.PostAsync($"http://localhost:5062/api/apotek/ordinationer/{ordinationId}", null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("GenindlæsReceptListe", new { cprnummer = cpr });
+                }
+            }
+            catch (Exception)
+            {
+
             }
 
             return Content($"Der opstod en fejl ved udlevering af ordinationen.");

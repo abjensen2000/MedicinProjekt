@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LægehusUI.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,0" Spacing="25">
+
+            <!-- Login-sektion -->
+            <StackLayout x:Name="LoginSection" IsVisible="True">
+                <Label Text="Login" FontSize="24" HorizontalOptions="Center"/>
+                <Entry x:Name="YdernummerEntry" Placeholder="Indtast ydernummer"/>
+                <Button x:Name="LoginKnap" Text="Login" Clicked="LoginKnap_Clicked" HorizontalOptions="Fill"/>
+            </StackLayout>
+
+            <!-- Opgavesektion (skjult indtil login) -->
+            <StackLayout x:Name="ReceptSection" IsVisible="False">
+
+                <!-- Søg Patient Sektion -->
+                <StackLayout x:Name="SøgPatientSection">
+                    <Label Text="Du er nu logget ind!" FontSize="16" HorizontalOptions="Center"/>
+                    <Label Text="Søg efter patient" FontSize="20" HorizontalOptions="Center" Margin="0, 10, 0, 0"/>
+
+                    <Entry x:Name="CprSøgEntry" Placeholder="Indtast CPR på patient"/>
+                    <Button x:Name="SøgPatientKnap" Text="Fremsøg recepter" Clicked="SøgPatientKnap_Clicked" HorizontalOptions="Fill"/>
+                </StackLayout>
+
+                <!-- Patientens Receptliste -->
+                <StackLayout x:Name="PatientReceptListe" Margin="0, 20, 0, 0" IsVisible="False">
+                    <Label Text="Patientens recepter (Klik for at se detaljer/ordinationer)" FontAttributes="Bold" HorizontalOptions="Center" />
+
+                    <ScrollView MaximumHeightRequest="200">
+                        <VerticalStackLayout x:Name="ReceptListeView" Spacing="10"/>
+                    </ScrollView>
+
+                    <!-- Knap til at åbne "Opret Recept" formularen -->
+                    <Button x:Name="ÅbenOpretReceptKnap" Text="Opret ny recept til patient" Clicked="ÅbenOpretReceptKnap_Clicked" Margin="0,15,0,0" BackgroundColor="Green" TextColor="White"/>
+                </StackLayout>
+
+                <!-- Sektion til at oprette en NY recept -->
+                <StackLayout x:Name="OpretReceptSection" Margin="0, 20, 0, 0" IsVisible="False">
+                    <Label Text="Opret ny recept" FontSize="20" HorizontalOptions="Center"/>
+                    <Label x:Name="OpretReceptCprLabel" FontAttributes="Italic" HorizontalOptions="Center"/>
+
+                    <!-- Hvis dit ReceptDTO kræver ekstra felter ved oprettelse, kan de tilføjes her -->
+                    <Button x:Name="GemReceptKnap" Text="Bekræft og opret recept" Clicked="GemReceptKnap_Clicked" HorizontalOptions="Fill" BackgroundColor="Green" TextColor="White"/>
+                    <Button Text="Annuller" Clicked="AnnullerReceptKnap_Clicked" HorizontalOptions="Fill" BackgroundColor="Gray" Margin="0,5,0,0"/>
+                </StackLayout>
+
+                <!-- Detaljevisning af valgt recept (Vis ordinationer og giv mulighed for at tilføje ny) -->
+                <StackLayout x:Name="ReceptDetaljerSection" Margin="0, 20, 0, 0" IsVisible="False">
+                    <Label Text="Recept detaljer" FontSize="20" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <Label x:Name="ValgtReceptInfoLabel" FontAttributes="Italic" HorizontalOptions="Center" Margin="0,0,0,10"/>
+
+                    <!-- Liste over eksisterende ordinationer -->
+                    <StackLayout x:Name="VisOrdinationerSection" Margin="0,0,0,20">
+                        <Label Text="Eksisterende ordinationer på denne recept:" FontAttributes="Bold" />
+                        <VerticalStackLayout x:Name="OrdinationerListeView" Spacing="5" Margin="0,5,0,0"/>
+                    </StackLayout>
+
+                    <!-- Formular til at tilføje en NY ordination -->
+                    <StackLayout x:Name="OpretOrdinationSection">
+                        <Label Text="Tilføj ny ordination til recept" FontSize="16" FontAttributes="Bold" Margin="0,10,0,0"/>
+                        <Entry x:Name="LægemiddelEntry" Placeholder="Indtast lægemiddel"/>
+                        <Entry x:Name="DosisEntry" Placeholder="Indtast dosis for lægemiddel"/>
+                        <Entry x:Name="AntalUdleveringerEntry" Placeholder="Indtast antal udleveringer til patient" Keyboard="Numeric"/>
+
+                        <Button x:Name="OpretOrdinationKnap" Text="Tilføj ordination" Clicked="OpretOrdinationKnap_Clicked" HorizontalOptions="Fill" Margin="0,10,0,0"/>
+                    </StackLayout>
+
+                    <Button Text="Tilbage til listen" Clicked="TilbageFraDetaljerKnap_Clicked" HorizontalOptions="Fill" BackgroundColor="Gray" Margin="0,15,0,0"/>
+                </StackLayout>
+
+            </StackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

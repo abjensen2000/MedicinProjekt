@@ -28,6 +28,14 @@
         }
     }
 }
+else if (ViewBag.Error != null)
+{
+    <p>@ViewBag.Error</p>
+}
+else if (ViewBag.Message != null)
+{
+    <p>@ViewBag.Message</p>
+}
 else
 {
     <p>Ingen recepter fundet.</p>

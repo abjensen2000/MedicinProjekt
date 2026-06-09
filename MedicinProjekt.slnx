@@ -7,8 +7,6 @@
   </Folder>
   <Folder Name="/DataLayer/">
     <Project Path="ConsoleApp1/DataAccess.csproj" />
-    <Project Path="Mappers/Mappers.csproj" />
-    <Project Path="Models/Models.csproj" Id="587eacf4-35bd-4545-8a1e-044430316011" />
   </Folder>
   <Folder Name="/Klienter/">
     <Project Path="ApotekUI/ApotekUI.csproj" />

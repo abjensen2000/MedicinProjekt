@@ -23,10 +23,11 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<MedicinContext>();
+    var apotekService = scope.ServiceProvider.GetRequiredService<ApotekService>();
 
-    if (!context.Set<Apotek>().Any())
+    /*if (!context.Set<Apotek>().Any())
     {
-        var apotek1 = new Apotek("Løve apoteket");
+        var apotek1 =  new Apotek("Løve apoteket");
         var apotek2 = new Apotek("Medicinmanden");
         var apotek3 = new Apotek("Apo24/7");
 
@@ -57,7 +58,7 @@ using (var scope = app.Services.CreateScope())
 
         context.AddRange(apotek1, apotek2, apotek3, lægehus1, lægehus2, lægehus3, patient1, patient2, recept1, recept2);
         context.SaveChanges();
-    }
+    }*/
 }
 
 // Configure the HTTP request pipeline.

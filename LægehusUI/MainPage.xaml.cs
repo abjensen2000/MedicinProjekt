@@ -9,7 +9,7 @@ namespace LægehusUI
         private LægehusDTO? _currentLægehus;
         private ReceptDTO? _valgtRecept;
 
-        public MainPage()
+        public MainPage() // Bruger ikke databinding, men kunne have være lækker så man ikke skulle Children.Add()/Children.Clear()
         {
             InitializeComponent();
         }

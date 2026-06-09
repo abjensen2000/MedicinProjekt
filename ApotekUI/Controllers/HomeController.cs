@@ -48,7 +48,7 @@ namespace ApotekUI.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Forside(string cprnummer, int apotekID)
+        public async Task<IActionResult> Forside(string cprnummer, int apotekID) //Bruger ikke apotekID
         {
             List<ReceptMedOrdinationer> recepterMedOrdinationer = new List<ReceptMedOrdinationer>();
 

@@ -9,8 +9,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ConsoleApp1\DataAccess.csproj" />
     <ProjectReference Include="..\DTO\DTO.csproj" />
-    <ProjectReference Include="..\Mappers\Mappers.csproj" />
-    <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 
 </Project>

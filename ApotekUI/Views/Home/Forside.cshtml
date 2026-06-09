@@ -29,3 +29,12 @@
 {
     <p>@ViewBag.Message</p>
 }
+<!--Alternativ til form: 
+    <form method="post" action="/Home/Forside">
+    Men hvis route ændres til /soeg/patient
+    Så skal alle form methods der bruger det endpoints ændres.
+    I det brugte eksempel leder api først efter controller "Home", og så metode "Forside".
+    Så hvis man laver route om, leder den stadig efter Forside metode, der så har fået ny route
+
+
+-->
